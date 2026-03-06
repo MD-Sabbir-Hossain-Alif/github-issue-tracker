@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="md. sabbir hossain ailf">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Github Issue Tracker</title>
+    <title>Github Issue Tracker | Log In</title>
+    <link rel="shortcut icon" href="assets/github-logo.png" type="image/x-icon">
 
     <!-- daisyui + tailwind css-->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -20,8 +21,47 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <h1 class="text-2xl">hello World</h1>
-</body>
+<body class="bg-[#F8FAFC] min-h-screen sm:py-15">
+    <main class="card bg-base-100 shadow-xl max-w-130 mx-auto ">
+        <div class="flex flex-col justify-center items-center p-8">
+            <div id="logo" class="flex flex-col gap-6 items-center text-center">
+                <img src="assets/github-logo.png" alt="github logo">
+                <div>
+                    <h3 class="text-2xl font-semibold text-color">GitHub Issues Tracker</h3>
+                    <p class="text-color-gray">Sign in to manage your issues</p>
+                </div>
+            </div>
+
+            <div id="form" class="w-full max-w-full mx-auto mt-6">
+                <fieldset class="fieldset text-base">
+                    <label class="label text-color font-medium">Username</label>
+                    <input id="input-user" type="text" class="input w-full" placeholder="Enter Username" value="admin" />
+                    <p class="text-[#4A00FF] mb-3">Default: admin</p>
+                
+                    <label class="label text-color font-medium">Password</label>
+                    <input id="input-pass" type="password" class="input w-full" placeholder="Password" value="admin123" />
+                    <p class="text-[#4A00FF]">Default: admin123</p>
+
+                    <button id="login-btn" class="btn btn-primary mt-4 w-full">Sign In</button>
+                </fieldset>
+            </div>
+
+            <div class="flex justify-between items-center w-full gap-2 py-6">
+                <hr class="border w-full border-[#64748b8c] my-4">
+                <p>OR</p>
+                <hr class="border w-full border-[#64748B8c] my-4">
+            </div>
+
+            <div class="text-center">
+                <p class="text-color-gray text-sm mb-4">Demo Credentials:</p>
+                <p>
+                    <span class="text-color font-semibold">Username:</span> admin
+                    <br>
+                    <span class="text-color font-semibold">Password:</span> admin123
+                </p>
+            </div>
+        </div>
+        <script src="scripts/login.js"></script>
+    </main>
 
 </html>
