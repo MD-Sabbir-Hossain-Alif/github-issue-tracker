@@ -4,13 +4,13 @@
     font-family: "Geist", sans-serif;
 }
 
-.container {
+.issues-container {
     max-width: 1600px;
-    width: 70%;
+    width: 73%;
     margin: 0 auto;
 }
 
-.text-color {
+.text-color-main {
     color: #1F2937;
 }
 
