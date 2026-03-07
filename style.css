@@ -6,7 +6,8 @@
 
 .issues-container {
     max-width: 1600px;
-    width: 73%;
+    /*? width: 69.38%; --> as par figma design*/ 
+    width: 73%;  /** here i use 73 for my 100% screen*/
     margin: 0 auto;
 }
 
