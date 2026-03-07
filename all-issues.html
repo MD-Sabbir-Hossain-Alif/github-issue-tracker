@@ -56,9 +56,9 @@
         <!-- tab section -->
         <section>
             <div class="flex gap-2 p-6 shadow-sm bg-white rounded-lg">
-                <button id="all-tab" class="btn btn-primary sm:w-30 px-3 py-2 text-white">All</button>
-                <button id="open-tab" class="btn sm:w-30 px-3 py-2 text-color-gray ">Open</button>
-                <button id="close-tab" class="btn sm:w-30 px-3 py-2 text-color-gray">Close</button>
+                <button id="all-tab" onclick="toggle('all-tab')" class="btn btn-primary sm:w-30 px-3 py-2 text-white">All</button>
+                <button id="open-tab" onclick="toggle('open-tab')" class="btn sm:w-30 px-3 py-2 text-color-gray ">Open</button>
+                <button id="closed-tab" onclick="toggle('closed-tab')" class="btn sm:w-30 px-3 py-2 text-color-gray">Closed</button>
             </div>
         </section>
 
@@ -72,14 +72,14 @@
                     </div>
 
                     <div>
-                        <h4 class="text-color-main text-xl font-semibold"><span id="total-issues">50</span> Issues</h4>
+                        <h4 class="text-color-main text-xl font-semibold"><span id="total-issue">0</span> Issues</h4>
                         <p class="text-color-gray">Track and manage your project issues</p>
                     </div>
                 </div>
 
                 <div class="flex mx-auto sm:mx-0 gap-4">
                     <p class="text-color-main font-medium"><samp class="badge bg-green-600 badge-xs"></samp> Open</p>
-                    <p class="text-color-main font-medium"><samp class="badge bg-purple-600 badge-xs"></samp> Open</p>
+                    <p class="text-color-main font-medium"><samp class="badge bg-purple-600 badge-xs"></samp> Closed</p>
                 </div>
             </section>
 
