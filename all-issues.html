@@ -114,8 +114,28 @@
                             <p class="text-color-gray text-sm">1/15/2024</p>
                         </div>
                     </div> -->
-                    
+
+                    <!-- loader section -->
+                    <section id="loader" class="text-center col-span-full p-25 hidden">
+                        <span class="loading loading-bars loading-xl"></span>
+                    </section>
                 </div>
+
+                <!-- Open the modal using ID.showModal() method -->
+                <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+                    <div class="modal-box max-w-175 w-full p-2 sm:p-8 ">
+                        <div id="details-container" class="space-y-6">
+                        
+                        </div>
+
+                        <div class="modal-action">
+                            <form method="dialog">
+                                <!-- if there is a button in form, it will close the modal -->
+                                <button class="btn btn-primary">Close</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
             </section>
         </section>
     </main>

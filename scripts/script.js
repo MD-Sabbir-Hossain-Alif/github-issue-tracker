@@ -28,6 +28,10 @@ const countIssue = () => {
     }
 }
 
+
+//* manage loader
+const loader = document.getElementById("loader");
+
 // step:3.1 get tab btns
 const allTabBtn = document.getElementById('all-tab');
 const openTabBtn = document.getElementById('open-tab');
@@ -64,8 +68,86 @@ const toggle = (id) => {
 
 // console.log(currentStatus)
 
+
+// setp:5 display issue details 
+//* function Load Word Detail
+const loadIssueDetail = async (id) => {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const details = await res.json();
+    displayIssueDetail(details.data);
+    // console.log(details.data)
+}
+
+
+const displayIssueDetail = (issue) => {
+    // console.log('modal clicked');
+
+//     {
+//     "id": 3,
+//     "title": "Update README with installation instructions",
+//     "description": "The README file needs better installation instructions for new contributors.",
+//     "status": "closed",
+//     "labels": [
+//         "documentation"
+//     ],
+//     "priority": "low",
+//     "author": "mike_docs",
+//     "assignee": "sarah_dev",
+//     "createdAt": "2024-01-10T08:00:00Z",
+//     "updatedAt": "2024-01-12T16:45:00Z"
+// }
+
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        <div>
+            <h3 class="text-color-main text-2xl font-bold mb-2">${issue.title}</h3>
+            <div class="flex flex-wrap gap-1"> 
+                <span class="badge ${issue.status === 'open' ? 'bg-[#00A96E]' : issue.status === 'closed' ? 'bg-[#A855F7]' : ''}  font-medium text-white p-2 rounded-full">
+                </i>${issue.status === 'open' ? 'Opened' : issue.status === 'closed' ? 'Closed' : ''}
+                </span>
+                
+                <p class="text-color-gray"> 
+                &#8226; Opened by ${issue.author} &#8226; ${new Date(issue.createdAt).toLocaleDateString()}
+                </p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-1 my-4 text-xs">
+                <div
+                    class="badge border border-[#FECACA] bg-[#FEECEC] font-medium text-[#EF4444] uppercase rounded-full ${issue.labels[0] ? '' : 'hidden'}">
+                    <i class="fa-solid fa-bug"></i>${issue.labels[0]}</div>
+                <div
+                    class="badge border border-[#FDE68A] bg-[#FFF8DB] font-medium text-[#D97706] uppercase rounded-full whitespace-nowrap ${issue.labels[1] ? '' : 'hidden'}">
+                <i class="fa-solid fa-life-ring "></i>${issue.labels[1]}</div>
+        </div>
+
+        <div>
+            <p class="text-color-gray">${issue.description}</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5 p-4 bg-[#F8FAFC] rounded-lg">
+            <div>
+                <p class="text-color-gray">Assignee:</p>
+                <p class="text-color-main font-semibold">${issue.author}</p>
+            </div>
+            <div>
+                <p class="text-color-gray">Priority:</p>
+                <div
+                    class="badge py-3 ${issue.priority === 'high' ? 'bg-[#EF4444]' : issue.priority === 'medium' ? 'bg-[#F59E0B]' : 'bg-[#9CA3AF]'} text-white font-medium rounded-full uppercase w-20">
+                    ${issue.priority}
+                </div>
+        </div>
+
+        `
+
+    document.getElementById('my_modal_5').showModal()
+}
+
+
 //* setp:1 ==> get all issue list
 const loadIssues = async () => {
+    loader.classList.remove("hidden");
     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
     const res = await fetch(url);
     const issuesData = await res.json();
@@ -94,7 +176,7 @@ loadIssues()
 //* step:1.1 ==> display all issues in issues card container
 const displayIssues = (issues) => {
 
-    
+    loader.classList.add("hidden");
 
     // step:1.3 display every issues 
     issues.forEach(issue => {
@@ -120,7 +202,7 @@ const displayIssues = (issues) => {
                 </div>
 
                 <div class="space-y-2">
-                    <h2 class="text-color-main font-semibold">${issue.title}</h2>
+                    <h2 onclick="loadIssueDetail(${issue.id})" class="text-color-main font-semibold cursor-pointer">${issue.title}</h2>
                     <p class="text-color-gray text-sm line-clamp-2">${issue.description}</p>
                     <div class="flex flex-wrap gap-1 my-4 text-xs">
                         <div
