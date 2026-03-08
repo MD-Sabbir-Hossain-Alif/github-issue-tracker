@@ -3,9 +3,10 @@
 // Step: 3.1 make arr for two state
 let openList = [];
 let closeList = [];
+let currentStatus = 'all-tab'
 
-console.log(openList)
-console.log(closeList)
+// console.log(openList)
+// console.log(closeList)
 
 //* setp:1.2 get issues container
 const issuesContainer = document.getElementById('issue-container')
@@ -15,16 +16,22 @@ const issuesContainer = document.getElementById('issue-container')
 const totalIssue = document.getElementById('total-issue')
 // setp:2.1 count total issuesData
 
-const countTotalIssue = (issues) => {
-    totalIssue.innerText = issues.length
-    // console.log(issues.length)
+
+const countIssue = () => {
+    
+    if (currentStatus === 'open-tab') {
+        totalIssue.innerText = openList.length;
+    } else if (currentStatus === 'closed-tab') {
+        totalIssue.innerText = closeList.length;
+    } else if(currentStatus === 'all-tab') {
+        totalIssue.innerText = openList.length + closeList.length
+    }
 }
 
 // step:3.1 get tab btns
 const allTabBtn = document.getElementById('all-tab');
 const openTabBtn = document.getElementById('open-tab');
 const closedTabBtn = document.getElementById('closed-tab');
-
 
 
 // setp:3 toggle tab btn 
@@ -48,14 +55,14 @@ const toggle = (id) => {
     selected.classList.remove('text-color-gray')
     selected.classList.add('btn-primary', 'text-white');
 
-    if (id === 'open-tab') {
-        issuesContainer.classList.add('hidden')
-    } else if (id === 'closed-tab') {
-        issuesContainer.classList.add('hidden')
-    } else if (id === 'all-tab') {
-        issuesContainer.classList.remove('hidden')
-    }
+    // update current status 
+    currentStatus = id
+
+    countIssue()
+    displayFilterIssues()
 }
+
+// console.log(currentStatus)
 
 //* setp:1 ==> get all issue list
 const loadIssues = async () => {
@@ -86,9 +93,8 @@ loadIssues()
 
 //* step:1.1 ==> display all issues in issues card container
 const displayIssues = (issues) => {
-    issuesContainer.innerHTML = "";
 
-    countTotalIssue(issues)
+    
 
     // step:1.3 display every issues 
     issues.forEach(issue => {
@@ -102,6 +108,8 @@ const displayIssues = (issues) => {
 
         const issuesCard = document.createElement('div');
         issuesCard.className = `card p-0 bg-white border-t-3 ${issue.status === 'open' ? "border-t-[#00A96E]" : "border-t-[#A855F7]"}  border border-[#EFEFEF] shadow rounded-sm`;
+
+        issuesCard.setAttribute("data-status", issue.status);
         issuesCard.innerHTML = `
             <div class="p-4 space-y-3">
                 <div class="flex justify-between items-center">
@@ -126,10 +134,37 @@ const displayIssues = (issues) => {
 
                 <div class="border-t border-[#E4E4E7] p-4 space-y-2">
                     <p class="text-color-gray text-sm">#${issue.id} by ${issue.author}</p>
-                    <p class="text-color-gray text-sm">${issue.createdAt}</p>
+                    <p class="text-color-gray text-sm">${new Date(issue.createdAt).toLocaleDateString()}</p>
                 </div>
             </div>
         `
         issuesContainer.append(issuesCard)
+        countIssue()
     });
 }
+
+
+const displayFilterIssues = () => {
+    const cards = document.querySelectorAll("#issue-container .card");
+
+    cards.forEach(card => {
+        const status = card.getAttribute("data-status");
+
+        if (currentStatus === "all-tab") {
+            card.classList.remove("hidden");
+        }else if (currentStatus === "open-tab") {
+            if (status === "open") {
+                card.classList.remove("hidden");
+            } else {
+                card.classList.add("hidden");
+            }
+        }else if (currentStatus === "closed-tab") {
+            if (status === "closed") {
+                card.classList.remove("hidden");
+            } else {
+                card.classList.add("hidden");
+            }
+        }
+    });
+
+};
