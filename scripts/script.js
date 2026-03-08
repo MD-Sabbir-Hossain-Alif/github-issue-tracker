@@ -148,6 +148,11 @@ const displayIssueDetail = (issue) => {
 //* setp:1 ==> get all issue list
 const loadIssues = async () => {
     loader.classList.remove("hidden");
+
+    // reset arrays
+    openList = [];
+    closeList = [];
+
     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
     const res = await fetch(url);
     const issuesData = await res.json();
@@ -221,8 +226,8 @@ const displayIssues = (issues) => {
             </div>
         `
         issuesContainer.append(issuesCard)
-        countIssue()
     });
+    countIssue()
 }
 
 
@@ -250,3 +255,23 @@ const displayFilterIssues = () => {
     });
 
 };
+
+// step:6 search functionality
+
+document.getElementById('btn-search').addEventListener('click', () => {
+    const input = document.getElementById('input-search')
+    const searchValue = input.value.trim().toLowerCase()
+    // console.log(searchValue)
+    loader.classList.remove("hidden");
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+        .then((res) => res.json())
+        .then(data => {
+            const findIssue = data.data
+
+            issuesContainer.innerHTML = '';
+            openList = [];
+            closeList = [];
+            // console.log(filterIssue)
+            displayIssues(findIssue)
+        })
+})
